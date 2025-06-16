@@ -10,6 +10,18 @@
 #                                                                              #
 # **************************************************************************** #
 
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/06/16 12:10:18 by dlesieur          #+#    #+#             #
+#    Updated: 2025/06/16 12:26:32 by dlesieur         ###   ########.fr       #
+#                                                                              #
+# **************************************************************************** #
+
 NAME=libfdf.a
 PROG=fdf
 CC=cc
@@ -19,7 +31,8 @@ LDFLAGS=-lmlx -lXext -lX11
 SRC_DIR=src
 LIBX_PATH=$(INC)/Minilibx
 LIBFT_PATH=$(INC)/libft
-SRCS=$(SRC_DIR)/fdf.c
+SRCS=$(SRC_DIR)/fdf.c\
+	$(SRC_DIR)/render/draw_simple.c
 OBJ_DIR=obj
 OBJS=$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 AR=ar -rcs
@@ -36,7 +49,7 @@ $(PROG): $(LIBMLX) $(LIBFT) $(NAME)
 	$(CC) $(NAME) $(LIBFT) -L$(LIBX_PATH) $(LDFLAGS) -o $(PROG)
 
 # Build our static library
-$(NAME): $(OBJ_DIR) $(OBJS)
+$(NAME): $(OBJS)
 	$(AR) $(NAME) $(OBJS)
 
 # Build MinilibX library
@@ -47,12 +60,9 @@ $(LIBMLX):
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
-# Create object directory
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
-
-# Compile source files to objects
+# Compile source files to objects - with directory creation
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 debug:
@@ -63,13 +73,13 @@ debug:
 
 clean: 
 	$(RM) $(OBJ_DIR)
-	make -C $(LIBX_PATH) clean
-	make -C $(LIBFT_PATH) clean
+	-make -C $(LIBFT_PATH) clean 2>/dev/null || true
+	-make -C $(LIBX_PATH) clean 2>/dev/null || true
 
 fclean: clean
 	$(RM) $(NAME) $(PROG)
-	make -C $(LIBX_PATH) fclean
-	make -C $(LIBFT_PATH) fclean
+	-make -C $(LIBFT_PATH) fclean 2>/dev/null || true
+	# MinilibX doesn't have fclean, skip it
 
 re: fclean all
 
