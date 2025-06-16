@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:49:22 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 20:53:28 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:24:17 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 int handle_keypress(int key, t_data *data)
 {
+    // First check if it's a theme switch key
+    if (handle_theme_switch(key, data))
+        return (0);
+    
     if (key == ESC_KEY)
+    {
         handle_close(data);
+        return (0);
+    }
     else if (key == W_KEY || key == UP_KEY)
         data->camera->offset_y -= 20;
     else if (key == S_KEY || key == DOWN_KEY)
@@ -38,6 +45,8 @@ int handle_keypress(int key, t_data *data)
         data->camera->zoom *= 0.8;
     else if (key == SPACE_KEY)
         data->controls->color_mode = (data->controls->color_mode + 1) % 3;
+    else if (key == TAB_KEY)  // Add Tab key for theme cycling
+        cycle_color_theme(data);
     // Add Z-scale controls for fine-tuning
     else if (key == 122) // 'z' key - increase Z scale
     {

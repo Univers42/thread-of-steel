@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:27:17 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 20:55:19 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:24:16 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define PLUS_KEY 61
 # define MINUS_KEY 45
 # define SPACE_KEY 32
+# define TAB_KEY 65289 // Add tab key for theme cycling
 
 // Mouse buttons
 # define MOUSE_LEFT 1
@@ -97,6 +98,7 @@ typedef struct s_controls
     int mouse_y;
     int mouse_pressed;
     int color_mode;
+    int color_theme;        // Add color theme field
     int last_mouse_x;
     int last_mouse_y;
 }   t_controls;
@@ -150,5 +152,11 @@ int is_line_visible(t_point p1, t_point p2, int width, int height);
 void draw_line_fast(t_data *data, t_point *p1, t_point *p2);
 int calculate_view_hash(t_data *data);
 int clip_line(t_point *p1, t_point *p2, int width, int height);
+
+// Add new function prototypes for color themes
+int get_themed_color(int z_value, int min_z, int max_z, int theme);
+const char* get_theme_name(int theme);
+int handle_theme_switch(int key, t_data *data);
+void cycle_color_theme(t_data *data);
 
 #endif

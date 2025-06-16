@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:36:56 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 20:44:47 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:24:16 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <math.h>
-
-
-
-
-
-
-
 
 int main(int argc, char **argv)
 {
@@ -94,6 +87,7 @@ int main(int argc, char **argv)
     controls->mouse_y = 0;
     controls->mouse_pressed = 0;
     controls->color_mode = 0;
+    controls->color_theme = 1;  // Initialize with Earth theme
     controls->last_mouse_x = 0;
     controls->last_mouse_y = 0;
     
@@ -113,7 +107,7 @@ int main(int argc, char **argv)
     mlx_hook(data.win, 4, 1L<<2, handle_mouse_press, &data);
     mlx_hook(data.win, 5, 1L<<3, handle_mouse_release, &data);
     mlx_hook(data.win, 6, 1L<<6, handle_mouse_move, &data);
-    mlx_hook(data.win, 17, 0, handle_close, &data);
+    mlx_hook(data.win, 17, 1L<<17, handle_close, &data);  // Fix event mask
     
     // Enable key repeat for smooth movement
     mlx_do_key_autorepeatoff(data.mlx);
@@ -126,6 +120,8 @@ int main(int argc, char **argv)
     ft_putendl_fd("R/T: Rotate X-axis", 1);
     ft_putendl_fd("+/-: Zoom", 1);
     ft_putendl_fd("Mouse wheel: Zoom", 1);
+    ft_putendl_fd("1-9: Color themes", 1);          // Add theme controls
+    ft_putendl_fd("Tab: Cycle themes", 1);          // Add theme cycling
     ft_putendl_fd("Space: Change colors", 1);
     ft_putendl_fd("ESC: Exit", 1);
     

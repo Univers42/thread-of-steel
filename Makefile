@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/16 16:01:49 by dlesieur          #+#    #+#              #
-#    Updated: 2025/06/16 20:28:23 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/06/16 21:24:16 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,11 @@ SRCS=$(SRC_DIR)/fdf.c \
 	$(SRC_DIR)/render/draw_map.c \
 	$(SRC_DIR)/render/draw_line.c \
 	$(SRC_DIR)/render/pixel.c \
+	$(SRC_DIR)/render/color_themes.c \
 	$(SRC_DIR)/events/key.c \
 	$(SRC_DIR)/events/mouse.c \
 	$(SRC_DIR)/events/projection.c \
+	$(SRC_DIR)/events/theme_controls.c \
 	$(SRC_DIR)/utils/get.c \
 	$(SRC_DIR)/utils/exit.c
 
