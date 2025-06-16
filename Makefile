@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/16 16:01:49 by dlesieur          #+#    #+#              #
-#    Updated: 2025/06/16 21:24:16 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/06/16 21:38:38 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,16 @@ SRCS=$(SRC_DIR)/fdf.c \
 	$(SRC_DIR)/render/draw_line.c \
 	$(SRC_DIR)/render/pixel.c \
 	$(SRC_DIR)/render/color_themes.c \
+	$(SRC_DIR)/render/shapes/shapes_manager.c \
+	$(SRC_DIR)/render/shapes/shape_flat.c \
+	$(SRC_DIR)/render/shapes/shape_sphere.c \
+	$(SRC_DIR)/render/shapes/shape_cylinder.c \
+	$(SRC_DIR)/render/shapes/shape_cone.c \
+	$(SRC_DIR)/render/shapes/shape_wave.c \
+	$(SRC_DIR)/render/shapes/shape_torus.c \
+	$(SRC_DIR)/render/shapes/shape_saddle.c \
+	$(SRC_DIR)/render/shapes/shape_helix.c \
+	$(SRC_DIR)/render/shapes/shape_ripple.c \
 	$(SRC_DIR)/events/key.c \
 	$(SRC_DIR)/events/mouse.c \
 	$(SRC_DIR)/events/projection.c \

@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:55:53 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:09:05 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:47:38 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,15 +285,15 @@ t_point project_point(t_point point, t_camera *camera)
         last_angle_z = camera->angle_z;
     }
 
-    // Convert to float and apply minimal Z scaling to preserve proportions
+    // Convert point to float - NO SHAPE TRANSFORMATION HERE
     x = (float)point.x;
     y = (float)point.y;
     z = (float)point.z;
 
-    // Apply matrix rotation instead of Euler angles
+    // Apply matrix rotation
     rotate_point_matrix(&x, &y, &z, camera);
 
-    // Apply isometric projection with proper scaling
+    // Apply isometric projection
     projected.x = (int)((x - y) * cos(0.523599) * camera->zoom) + camera->offset_x;
     projected.y = (int)((x + y) * sin(0.523599) * camera->zoom - z * camera->zoom * 0.5) + camera->offset_y;
     

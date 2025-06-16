@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:08:14 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:09:04 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:47:38 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ static void draw_wireframe_complete(t_data *data)
 
 static void draw_wireframe_lod(t_data *data)
 {
+    if (!data || !data->map || !data->camera)
+        return;
+        
     int x, y;
     t_point p1, p2;
     int lod = calculate_lod(data->camera->zoom);
@@ -90,6 +93,9 @@ static void draw_wireframe_lod(t_data *data)
     {
         for (x = 0; x < data->map->width - step; x += step)
         {
+            if (y >= data->map->height || x >= data->map->width)
+                continue;
+                
             p1 = data->map->points[y][x];
             
             // Draw horizontal lines
@@ -119,8 +125,8 @@ static void draw_wireframe_lod(t_data *data)
 
 void draw_map_optimized(t_data *data)
 {
-    // Remove conditional rendering hash check that causes flickering
-    // Always redraw during mouse interaction for smooth rotation
+    if (!data || !data->addr || !data->map)
+        return;
     
     // Fast memory clear using memset - more efficient than pixel-by-pixel
     ft_memset(data->addr, 0, data->line_length * WIN_HEIGHT);

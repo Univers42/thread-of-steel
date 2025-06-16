@@ -29,4 +29,15 @@ typedef struct s_map
 	int		min_z;
 }				t_map;
 
+// Map scaling functions
+typedef struct s_map_bounds {
+    int min_value;
+    int max_value;
+    int range;
+} t_map_bounds;
+
+t_map_bounds get_map_bounds(int **map, int width, int height);
+void scale_map_values(int **map, int width, int height, int target_range);
+void normalize_map(int **map, int width, int height);
+
 #endif

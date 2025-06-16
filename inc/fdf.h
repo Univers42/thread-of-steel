@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:27:17 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:24:16 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:57:44 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,15 @@
 
 # include "libft/libft.h"
 # include "Minilibx/mlx.h"
+# include "shapes.h"
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
+
+// Define mathematical constants if not available
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 
 // Window dimensions
 # define WIN_WIDTH 1920
@@ -51,7 +57,9 @@
 # define PLUS_KEY 61
 # define MINUS_KEY 45
 # define SPACE_KEY 32
-# define TAB_KEY 65289 // Add tab key for theme cycling
+# define TAB_KEY 65289
+# define ALT_L 65513        // Add Alt key codes
+# define ALT_R 65514
 
 // Mouse buttons
 # define MOUSE_LEFT 1
@@ -98,7 +106,9 @@ typedef struct s_controls
     int mouse_y;
     int mouse_pressed;
     int color_mode;
-    int color_theme;        // Add color theme field
+    int color_theme;
+    int shape_mode;         // Add shape mode field
+    int alt_pressed;        // Add Alt key state
     int last_mouse_x;
     int last_mouse_y;
 }   t_controls;
@@ -124,6 +134,7 @@ void draw_map(t_data *data);
 void draw_line(t_data *data, t_point *p1, t_point *p2);
 void free_map(t_map *map);
 int handle_keypress(int key, t_data *data);
+int handle_keyrelease(int key, t_data *data);    // Add missing declaration
 int handle_mouse_press(int button, int x, int y, t_data *data);
 int handle_mouse_release(int button, int x, int y, t_data *data);
 int handle_mouse_move(int x, int y, t_data *data);
@@ -158,5 +169,8 @@ int get_themed_color(int z_value, int min_z, int max_z, int theme);
 const char* get_theme_name(int theme);
 int handle_theme_switch(int key, t_data *data);
 void cycle_color_theme(t_data *data);
+
+// Add new function prototypes for shapes
+t_point apply_shape_transform(t_point point, t_data *data);
 
 #endif

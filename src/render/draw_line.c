@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:50:55 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:09:04 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 21:47:39 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,12 @@ int clip_line(t_point *p1, t_point *p2, int width, int height)
 
 void draw_line_fast(t_data *data, t_point *p1, t_point *p2)
 {
-    t_point proj1 = project_point(*p1, data->camera);
-    t_point proj2 = project_point(*p2, data->camera);
+    // Apply shape transformations before projection
+    t_point shaped_p1 = apply_shape_transform(*p1, data);
+    t_point shaped_p2 = apply_shape_transform(*p2, data);
+    
+    t_point proj1 = project_point(shaped_p1, data->camera);
+    t_point proj2 = project_point(shaped_p2, data->camera);
     
     // Aggressive culling for off-screen lines
     if ((proj1.x < -100 && proj2.x < -100) || 
