@@ -6,14 +6,16 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:51:45 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 20:28:24 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:52:16 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void cleanup_data(t_data *data)
+int handle_close(void *param)
 {
+    t_data *data = (t_data *)param;
+    
     if (data->map)
         free_map(data->map);
     if (data->img)
@@ -29,13 +31,26 @@ void cleanup_data(t_data *data)
         mlx_destroy_display(data->mlx);
         free(data->mlx);
     }
-}
-
-int handle_close_window(void *param)
-{
-    t_data *data = (t_data *)param;
-    
-    cleanup_data(data);
     exit(0);
     return (0);
+}
+
+void free_map(t_map *map)
+{
+    int i;
+
+    if (!map)
+        return;
+    if (map->points)
+    {
+        i = 0;
+        while (i < map->height)
+        {
+            if (map->points[i])
+                free(map->points[i]);
+            i++;
+        }
+        free(map->points);
+    }
+    free(map);
 }

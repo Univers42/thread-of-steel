@@ -1,5 +1,4 @@
-
-INC=%%%%
+INC=..
 
 INCLIB=$(INC)/../lib
 
@@ -42,4 +41,5 @@ show:
 clean:
 	rm -f $(NAME) $(OBJ) *~ core *.core
 
+re: clean all
 re: clean all

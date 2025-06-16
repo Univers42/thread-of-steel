@@ -10,8 +10,7 @@
 
 ## Please use configure script
 
-
-INC	=%%%%
+INC	=.
 
 UNAME = $(shell uname)
 CC	= gcc
@@ -63,4 +62,5 @@ show:
 clean	:
 	rm -rf $(OBJ_DIR)/ $(NAME) $(NAME_UNAME) *~ core *.core
 
+.PHONY: all check show clean
 .PHONY: all check show clean

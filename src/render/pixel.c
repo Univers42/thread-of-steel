@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maps.h                                             :+:      :+:    :+:   */
+/*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 10:37:07 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 14:59:52 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/06/16 16:54:21 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/06/16 16:54:36 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MAPS_H
-# define MAPS_H
-typedef struct  s_point
-{
-	int	x;
-	int	y;
-	int	z;
-	int	color;
-}				t_point;
+#include "fdf.h"
 
-typedef struct s_map
+void my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
-	t_point	**points;
-	int		width;
-	int		height;
-	int		max_z;
-	int		min_z;
-}				t_map;
+    char *dst;
 
-#endif
+    if (x < 0 || x >= WIN_WIDTH || y < 0 || y >= WIN_HEIGHT)
+        return;
+    dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+    *(unsigned int*)dst = color;
+}

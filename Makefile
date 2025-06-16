@@ -5,20 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/16 12:10:18 by dlesieur          #+#    #+#             #
-#    Updated: 2025/06/16 12:26:32 by dlesieur         ###   ########.fr       #
-#                                                                              #
-# **************************************************************************** #
-
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/06/16 12:10:18 by dlesieur          #+#    #+#             #
-#    Updated: 2025/06/16 12:26:32 by dlesieur         ###   ########.fr       #
+#    Created: 2025/06/16 16:01:49 by dlesieur          #+#    #+#              #
+#    Updated: 2025/06/16 20:28:23 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,12 +15,23 @@ PROG=fdf
 CC=cc
 INC=inc
 CFLAGS=-Wall -Wextra -Werror -I$(INC) -I$(LIBX_PATH)
-LDFLAGS=-lmlx -lXext -lX11
+LDFLAGS=-lmlx -lXext -lX11 -lm
 SRC_DIR=src
 LIBX_PATH=$(INC)/Minilibx
 LIBFT_PATH=$(INC)/libft
-SRCS=$(SRC_DIR)/fdf.c\
-	$(SRC_DIR)/render/draw_simple.c
+
+# All source files organized by directory
+SRCS=$(SRC_DIR)/fdf.c \
+	$(SRC_DIR)/parser/parse_map.c \
+	$(SRC_DIR)/render/draw_map.c \
+	$(SRC_DIR)/render/draw_line.c \
+	$(SRC_DIR)/render/pixel.c \
+	$(SRC_DIR)/events/key.c \
+	$(SRC_DIR)/events/mouse.c \
+	$(SRC_DIR)/events/projection.c \
+	$(SRC_DIR)/utils/get.c \
+	$(SRC_DIR)/utils/exit.c
+
 OBJ_DIR=obj
 OBJS=$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 AR=ar -rcs
@@ -79,7 +78,6 @@ clean:
 fclean: clean
 	$(RM) $(NAME) $(PROG)
 	-make -C $(LIBFT_PATH) fclean 2>/dev/null || true
-	# MinilibX doesn't have fclean, skip it
 
 re: fclean all
 

@@ -35,3 +35,11 @@ dlesieur@dlesieur42:~/Documents/projects-42/fdf/thread-of-steel$ valgrind --trac
 ==587533== For lists of detected and suppressed errors, rerun with: -s
 ==587533== ERROR SUMMARY: 2 errors from 1 contexts (suppressed: 0 from 0)
 dlesieur@dlesieur42:~/Documents/projects-42/fdf/thread-of-steel$ 
+
+improved inefficiencies instead of parsing 3times, we parse one time with O(n) efficiency.
+
+## Key success of this aglortihm  to respond to the criter of fluency
+1. Single pass algorithm
+2. Bestself or memory management
+3. dynamic buffer, we use realloc to grow the lines buffer as needed
+4. efficient parsing : Get dimesnsions and parses data in the same pass

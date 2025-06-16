@@ -5,65 +5,46 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/16 14:08:14 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 14:29:34 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/06/16 16:54:21 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/06/16 20:28:24 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void draw_simple_object(t_data *data)
+void draw_wireframe_grid(t_data *data)
 {
-    int i;
+    int x, y;
+    t_point p1, p2;
 
-    i = -11;
-    while (++i <= 10)
-        mlx_pixel_put(data->mlx, data->win, data->x + i, data->y, data->color);
-    i = -11;
-    while (++i <= 10)
-        mlx_pixel_put(data->mlx, data->win, data->x, data->y + i, data->color);
+    y = 0;
+    while (y < data->map->height)
+    {
+        x = 0;
+        while (x < data->map->width)
+        {
+            p1 = data->map->points[y][x];
+            
+            // Draw horizontal lines
+            if (x < data->map->width - 1)
+            {
+                p2 = data->map->points[y][x + 1];
+                draw_line(data, &p1, &p2);
+            }
+            
+            // Draw vertical lines
+            if (y < data->map->height - 1)
+            {
+                p2 = data->map->points[y + 1][x];
+                draw_line(data, &p1, &p2);
+            }
+            x++;
+        }
+        y++;
+    }
 }
 
-int handle_keypress(int keycode, void *param)
+void clear_image(t_data *data)
 {
-    t_data *data = (t_data *)param;
-    
-    if (keycode == KEY_ESC)
-    {
-        mlx_destroy_window(data->mlx, data->win);
-        mlx_destroy_display(data->mlx);
-        free(data->mlx);
-        exit(0);
-    }
-    else if (keycode == KEY_LEFT)
-    {
-        data->x -= 10;
-        mlx_clear_window(data->mlx, data->win);
-        draw_simple_object(data);
-    }
-    else if (keycode == KEY_RIGHT)
-    {
-        data->x += 10;
-        mlx_clear_window(data->mlx, data->win);
-        draw_simple_object(data);
-    }
-    else if (keycode == KEY_UP)
-    {
-        data->y -= 10;
-        mlx_clear_window(data->mlx, data->win);
-        draw_simple_object(data);
-    }
-    else if (keycode == KEY_DOWN)
-    {
-        data->y += 10;
-        mlx_clear_window(data->mlx, data->win);
-        draw_simple_object(data);
-    }
-    else if (keycode == KEY_C)
-    {
-        data->color = (data->color == 0xFF0000) ? 0x00FF00 : 0xFF0000;
-        mlx_clear_window(data->mlx, data->win);
-        draw_simple_object(data);
-    }
-    return (0);
+    ft_memset(data->addr, 0, WIN_WIDTH * WIN_HEIGHT * (data->bits_per_pixel / 8));
 }
