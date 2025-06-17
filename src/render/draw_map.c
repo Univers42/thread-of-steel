@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:08:14 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/17 12:58:16 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:26:06 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ static void draw_wireframe_complete(t_data *data)
             if (x < data->map->width - 1)
             {
                 p2 = data->map->points[y][x + 1];
+                draw_line(data, &p1, &p2);
+            }
+            // Special case for sphere: connect rightmost to leftmost (longitude wrap)
+            else if (data->controls->shape_mode == SHAPE_SPHERE)
+            {
+                p2 = data->map->points[y][0];  // Wrap to first column
                 draw_line(data, &p1, &p2);
             }
             

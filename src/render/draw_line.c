@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:50:55 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:47:39 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:26:06 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,24 @@ void draw_line_fast(t_data *data, t_point *p1, t_point *p2)
     
     t_point proj1 = project_point(shaped_p1, data->camera);
     t_point proj2 = project_point(shaped_p2, data->camera);
+    
+    // For sphere shape, check if this is a longitude wrap connection
+    if (data->controls->shape_mode == SHAPE_SPHERE)
+    {
+        // If connecting rightmost to leftmost column, ensure smooth connection
+        int dx_original = abs(p2->x - p1->x);
+        if (dx_original > data->map->width / 2)
+        {
+            // This is likely a wrap-around connection
+            // Check if the projected distance is too large (indicates back-face)
+            int proj_distance = abs(proj2.x - proj1.x);
+            if (proj_distance > WIN_WIDTH / 3)
+            {
+                // Skip drawing very long lines that go around the back
+                return;
+            }
+        }
+    }
     
     // Aggressive culling for off-screen lines
     if ((proj1.x < -100 && proj2.x < -100) || 

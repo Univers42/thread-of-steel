@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 22:00:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:42:50 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:26:06 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ t_shape_result shape_torus_transform(float x, float y, float z, t_shape_params p
 t_shape_result shape_saddle_transform(float x, float y, float z, t_shape_params params);
 t_shape_result shape_helix_transform(float x, float y, float z, t_shape_params params);
 t_shape_result shape_ripple_transform(float x, float y, float z, t_shape_params params);
+
+// Add helper functions for spherical transformations
+void convert_to_polar_coords(t_shape_params params, float *longitude, float *latitude);
+void apply_spherical_mapping(float radius, float longitude, float latitude, float z_offset, 
+                            float *out_x, float *out_y, float *out_z);
 
 // Shape control functions
 int handle_shape_switch(int key, int modifier, struct s_data *data);
