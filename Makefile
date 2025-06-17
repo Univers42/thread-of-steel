@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/16 16:01:49 by dlesieur          #+#    #+#              #
-#    Updated: 2025/06/17 12:45:52 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/06/17 16:05:25 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,8 +42,13 @@ SRCS=$(SRC_DIR)/fdf.c \
 	$(SRC_DIR)/events/projection.c \
 	$(SRC_DIR)/events/theme_controls.c \
 	$(SRC_DIR)/utils/get.c \
-	$(SRC_DIR)/debug/terrain_analyzer.c \
-	$(SRC_DIR)/utils/exit.c
+	$(SRC_DIR)/utils/exit.c \
+	$(SRC_DIR)/utils/vec3.c \
+	$(SRC_DIR)/utils/vec2.c \
+	$(SRC_DIR)/utils/matrix.c \
+	$(SRC_DIR)/utils/math.c \
+	$(SRC_DIR)/utils/conversion.c \
+	$(SRC_DIR)/utils/verify.c
 
 OBJ_DIR=obj
 OBJS=$(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)

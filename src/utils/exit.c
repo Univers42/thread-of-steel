@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:51:45 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:24:27 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 13:30:26 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,32 @@ void free_map(t_map *map)
         free(map->points);
     }
     free(map);
+}
+
+void cleanup_data(t_data *data)
+{
+    if (data->map)
+        free_map(data->map);
+    if (data->img)
+        mlx_destroy_image(data->mlx, data->img);
+    if (data->win)
+        mlx_destroy_window(data->mlx, data->win);
+    if (data->camera)
+        free(data->camera);
+    if (data->controls)
+        free(data->controls);
+    if (data->mlx)
+    {
+        mlx_destroy_display(data->mlx);
+        free(data->mlx);
+    }
+}
+
+int handle_close_window(void *param)
+{
+    t_data *data = (t_data *)param;
+    
+    cleanup_data(data);
+    exit(0);
+    return (0);
 }

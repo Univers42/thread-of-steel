@@ -6,13 +6,12 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:55:53 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:47:38 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:11:07 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-#define TRACKBALLSIZE (1.2f)
 #define RENORMCOUNT 97
 
 // Vector math functions
@@ -133,8 +132,8 @@ void trackball(float q[4], float p1x, float p1y, float p2x, float p2y)
      * First, figure out z-coordinates for projection of P1 and P2 to
      * deformed sphere
      */
-    vset(p1, p1x, p1y, tb_project_to_sphere(TRACKBALLSIZE, p1x, p1y));
-    vset(p2, p2x, p2y, tb_project_to_sphere(TRACKBALLSIZE, p2x, p2y));
+    vset(p1, p1x, p1y, tb_project_to_sphere(TRACKBALL_SIZE, p1x, p1y));
+    vset(p2, p2x, p2y, tb_project_to_sphere(TRACKBALL_SIZE, p2x, p2y));
 
     /*
      *  Now, we want the cross product of P1 and P2
@@ -145,7 +144,7 @@ void trackball(float q[4], float p1x, float p1y, float p2x, float p2y)
      *  Figure out how much to rotate around that axis.
      */
     vsub(p1, p2, d);
-    t = vlength(d) / (2.0*TRACKBALLSIZE);
+    t = vlength(d) / (2.0*TRACKBALL_SIZE);
 
     /*
      * Avoid problems with out-of-control values...
