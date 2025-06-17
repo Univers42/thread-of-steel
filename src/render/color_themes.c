@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 21:15:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:24:17 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 10:47:06 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int get_themed_color(int z_value, int min_z, int max_z, int theme)
     int range = max_z - min_z;
     int index;
     
+    // If no height variation, use middle color
     if (range == 0) return get_theme_color_from_lut(theme, 128);
     
     // Fast height ratio calculation using bit operations

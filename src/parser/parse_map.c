@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 16:52:55 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:57:44 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:45:53 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static int fast_hex_to_int(const char *hex_str)
     if (hex_str[0] == '0' && (hex_str[1] == 'x' || hex_str[1] == 'X'))
         i = 2;
     
-    while (hex_str[i])
+    while (hex_str[i] && (
+        (hex_str[i] >= '0' && hex_str[i] <= '9') ||
+        (hex_str[i] >= 'a' && hex_str[i] <= 'f') ||
+        (hex_str[i] >= 'A' && hex_str[i] <= 'F')))
     {
         result <<= 4;
         if (hex_str[i] >= '0' && hex_str[i] <= '9')
@@ -69,20 +72,28 @@ static int parse_line_optimized(char *line, t_point *points, int y, int width, i
         if (negative)
             z_val = -z_val;
         
-        // Check for color
-        color = 0xFFFFFF; // default white
+        // Check for color - DEFAULT TO WHITE BUT PRESERVE EMBEDDED COLORS
+        color = 0xFFFFFF; // Default white
         if (*ptr == ',')
         {
             ptr++; // skip comma
             if (*ptr == '0' && (*(ptr+1) == 'x' || *(ptr+1) == 'X'))
             {
+                // Parse the hex color properly
                 color = fast_hex_to_int(ptr);
+                
                 // Skip to end of hex value
-                ptr += 2;
+                ptr += 2; // Skip "0x"
                 while ((*ptr >= '0' && *ptr <= '9') || 
                        (*ptr >= 'a' && *ptr <= 'f') || 
                        (*ptr >= 'A' && *ptr <= 'F'))
                     ptr++;
+                
+                // Debug: Print parsed colors for verification
+                #ifdef DEBUG_COLORS
+                if (color != 0xFFFFFF)
+                    printf("Parsed color: 0x%06X at (%d,%d)\n", color, x, y);
+                #endif
             }
         }
         
@@ -90,7 +101,7 @@ static int parse_line_optimized(char *line, t_point *points, int y, int width, i
         points[x].x = x;
         points[x].y = y;
         points[x].z = z_val;
-        points[x].color = color;
+        points[x].color = color;  // This preserves embedded colors
         
         // Update min/max Z
         if (z_val < *min_z) *min_z = z_val;

@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 11:27:17 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:57:44 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:45:54 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
-
+# include <limits.h>
 // Define mathematical constants if not available
 # ifndef M_PI
 #  define M_PI 3.14159265358979323846

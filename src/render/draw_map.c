@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 14:08:14 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:47:38 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:58:16 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ void draw_map_optimized(t_data *data)
 
 void draw_map(t_data *data)
 {
-    // Always use optimized version for consistent performance
+    // Always use the optimized version for consistent performance
     draw_map_optimized(data);
 }

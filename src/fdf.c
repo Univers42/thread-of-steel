@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 10:36:56 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/06/16 21:57:44 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/06/17 12:45:53 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,34 @@ int main(int argc, char **argv)
         mlx_destroy_display(data.mlx);
         free(data.mlx);
         return (1);
+    }
+    
+    // Debug: Print some color information from the parsed map
+    ft_putendl_fd("=== MAP COLOR DEBUG ===", 1);
+    int colored_points = 0;
+    for (int y = 0; y < data.map->height && y < 5; y++) // Check first 5 rows
+    {
+        for (int x = 0; x < data.map->width && x < 10; x++) // Check first 10 cols
+        {
+            if (data.map->points[y][x].color != 0xFFFFFF)
+            {
+                ft_putstr_fd("Found colored point at (", 1);
+                ft_putnbr_fd(x, 1);
+                ft_putstr_fd(",", 1);
+                ft_putnbr_fd(y, 1);
+                ft_putstr_fd(") with color 0xFF0000", 1);
+                ft_putendl_fd("", 1);
+                colored_points++;
+            }
+        }
+    }
+    if (colored_points == 0)
+        ft_putendl_fd("No colored points found in sample area", 1);
+    else
+    {
+        ft_putstr_fd("Found ", 1);
+        ft_putnbr_fd(colored_points, 1);
+        ft_putendl_fd(" colored points", 1);
     }
     
     camera = malloc(sizeof(t_camera));
@@ -86,10 +114,10 @@ int main(int argc, char **argv)
     controls->mouse_x = 0;
     controls->mouse_y = 0;
     controls->mouse_pressed = 0;
-    controls->color_mode = 0;
-    controls->color_theme = 1;
-    controls->shape_mode = 0;       // Initialize with flat shape
-    controls->alt_pressed = 0;      // Initialize Alt key state
+    controls->color_mode = 0;           // Start with white default mode
+    controls->color_theme = 0;          // Start with no theme (shows embedded colors)
+    controls->shape_mode = 0;           // Initialize with flat shape
+    controls->alt_pressed = 0;          // Initialize Alt key state
     controls->last_mouse_x = 0;
     controls->last_mouse_y = 0;
     
@@ -123,10 +151,11 @@ int main(int argc, char **argv)
     ft_putendl_fd("R/T: Rotate X-axis", 1);
     ft_putendl_fd("+/-: Zoom", 1);
     ft_putendl_fd("Mouse wheel: Zoom", 1);
+    ft_putendl_fd("0: Show embedded colors (default white)", 1);  // Add this line
     ft_putendl_fd("1-9: Color themes", 1);
-    ft_putendl_fd("Alt+1-9: Shape transforms", 1);     // Add shape controls
+    ft_putendl_fd("Alt+1-9: Shape transforms", 1);
     ft_putendl_fd("Tab: Cycle themes", 1);
-    ft_putendl_fd("Alt+Tab: Cycle shapes", 1);         // Add shape cycling
+    ft_putendl_fd("Alt+Tab: Cycle shapes", 1);
     ft_putendl_fd("Space: Change colors", 1);
     ft_putendl_fd("ESC: Exit", 1);
     

@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/06/16 16:01:49 by dlesieur          #+#    #+#              #
-#    Updated: 2025/06/16 21:38:38 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/06/17 12:45:52 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRCS=$(SRC_DIR)/fdf.c \
 	$(SRC_DIR)/events/projection.c \
 	$(SRC_DIR)/events/theme_controls.c \
 	$(SRC_DIR)/utils/get.c \
+	$(SRC_DIR)/debug/terrain_analyzer.c \
 	$(SRC_DIR)/utils/exit.c
 
 OBJ_DIR=obj
@@ -93,4 +94,29 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re debug
+# Demo and testing targets
+demo: $(NAME)
+	@chmod +x demo_script.sh
+	@./demo_script.sh
+
+test: $(NAME)
+	@chmod +x test_performance.sh
+	@./test_performance.sh
+
+install_demo_deps:
+	@echo "Installing demo dependencies..."
+	@sudo apt-get update > /dev/null 2>&1 || true
+	@sudo apt-get install -y bc valgrind > /dev/null 2>&1 || true
+
+help:
+	@echo "FDF - Thread of Steel Edition"
+	@echo "Usage:"
+	@echo "  make         - Build the project"
+	@echo "  make clean   - Remove object files"
+	@echo "  make fclean  - Remove all build files"
+	@echo "  make re      - Rebuild everything"
+	@echo "  make demo    - Run interactive demo"
+	@echo "  make test    - Run performance tests"
+	@echo "  make help    - Show this help"
+
+.PHONY: all clean fclean re debug demo test install_demo_deps help
