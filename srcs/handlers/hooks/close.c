@@ -1,16 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   private.h                                          :+:      :+:    :+:   */
+/*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 18:40:57 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/04 18:42:36 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/07/04 18:50:14 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 18:52:29 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRIVATE_H
-#define PRIVATE_H
 
-#endif
+static int red_cross()
+{
+
+}
+
+static int esc()
+{
+    
+}
+
+static int q_key()
+{
+        
+}
+
+int close_handler()
+{
+    // if the red cross is hit
+    // if the esc is hit
+    // if q is hit
+    // then quit but before free memory allocation
+}

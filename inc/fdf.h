@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:40:39 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/04 17:15:56 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:48:12 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ typedef enum s_theme
 /**
  * 
  */
-typedef enum s_key
+typedef enum s_hook_key
 {
-	key_up = 126
-}			t_key;
+	key_up = 126,
+	
+}			t_hook_key;
+// legacy mask for compatibility between x11 and my naming convention
+
 typedef struct s_map
 {
 	char	**map;

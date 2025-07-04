@@ -6,7 +6,7 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 15:37:04 by dlesieur          #+#    #+#              #
-#    Updated: 2025/07/04 15:40:00 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/04 18:24:32 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,3 +21,9 @@ AR=ar rcs
 RM=rm -f
 
 SRCS=srcs/main.c \
+
+clean:
+	$(RM) $(OBJECTS)
+
+fclean: clean
+	$(RM) $(PROGRAM) $(NAME)
