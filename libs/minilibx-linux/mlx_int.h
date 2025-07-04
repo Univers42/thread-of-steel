@@ -1,14 +1,14 @@
-/*
-** mlx_int.h for mlx in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Mon Jul 31 16:45:48 2000 Charlie Root
-** Last update Wed May 25 16:44:16 2011 Olivier Crouzet
-*/
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_int.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:49:48 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:49:50 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 /*
 ** Internal settings for MiniLibX

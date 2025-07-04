@@ -1,13 +1,14 @@
-/*
- ** xpm-read.c for MinilibX in 
- ** 
- ** Made by Charlie Root
- ** Login   <ol@epitech.net>
- ** 
- ** Started on  Tue Dec 11 15:25:27 2001 olivier crouzet
- ** Last update Sat Oct  1 14:56:13 2005 Olivier Crouzet
- */
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_xpm.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:51:27 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:51:31 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include	"mlx_int.h"
 
