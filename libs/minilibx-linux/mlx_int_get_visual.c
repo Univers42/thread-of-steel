@@ -1,22 +1,16 @@
-/*
-** mlx_int_get_visual.c for MinilibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Wed Oct  3 17:01:51 2001 Charlie Root
-** Last update Thu Oct  4 15:00:45 2001 Charlie Root
-*/
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_int_get_visual.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:39:16 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:39:25 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include	"mlx_int.h"
-
-
-/*
-** We need a private colormap for non-default Visual.
-*/
-
 
 int		mlx_int_get_visual(t_xvar *xvar)
 {

@@ -1,15 +1,8 @@
-
-
-
 #include	"mlx_int.h"
-
 #include	<unistd.h>
 #include <X11/extensions/Xrandr.h>
 
-/* global for independant extension */
-
 RRMode	saved_mode = 0;
-
 
 int			mlx_ext_fullscreen(t_xvar *xvar, t_win_list *win, int fullscreen)
 {

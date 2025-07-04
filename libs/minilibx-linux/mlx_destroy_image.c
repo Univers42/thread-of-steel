@@ -1,17 +1,27 @@
-/*
-** mlx_destroy_image.c for MinilibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Tue Mar 12 10:25:15 2002 Charlie Root
-** Last update Tue May 15 16:45:54 2007 Olivier Crouzet
-*/
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_destroy_image.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:37:37 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:37:47 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include	"mlx_int.h"
 
-
+/**
+ * mlx_destroy_image - Destroy an image and free its resources.
+ * @param xvar Pointer to the X server connection structure.
+ * @param img Pointer to the image structure to be destroyed.
+ * @return 0 on success, or -1 on failure.
+ * @note This function frees the memory associated with the image,
+ * including its data, pixmap, and graphics context (GC).
+ * If the image was created using shared memory (XShm), it detaches
+ * from the shared memory segment and frees it as well.
+ */
 int	mlx_destroy_image(t_xvar *xvar, t_img *img)
 {
   if (img->type == MLX_TYPE_SHM_PIXMAP ||

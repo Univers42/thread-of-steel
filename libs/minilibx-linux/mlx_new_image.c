@@ -1,15 +1,14 @@
-/*
-** mlx_new_image.c for MiniLibX in raytraceur
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Mon Aug 14 15:29:14 2000 Charlie Root
-** Last update Wed May 25 16:46:31 2011 Olivier Crouzet
-*/
-
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_new_image.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:41:45 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:41:46 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include	"mlx_int.h"
 
@@ -32,7 +31,6 @@ int	shm_att_pb(Display *d,XErrorEvent *ev)
 /*
 **  Data malloc :  width+32 ( bitmap_pad=32 ),    *4 = *32 / 8bit
 */
-
 
 void	*mlx_int_new_xshm_image(t_xvar *xvar,int width,int height,int format)
 {
@@ -102,8 +100,6 @@ void	*mlx_int_new_xshm_image(t_xvar *xvar,int width,int height,int format)
   return (img);
 }
 
-
-
 void	*mlx_int_new_image(t_xvar *xvar,int width, int height,int format)
 {
   t_img	*img;
@@ -136,7 +132,6 @@ void	*mlx_int_new_image(t_xvar *xvar,int width, int height,int format)
     XFlush(xvar->display);
   return (img);
 }
-
 
 void	*mlx_new_image(t_xvar *xvar,int width, int height)
 {

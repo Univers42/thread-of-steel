@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_int_set_win_event_mask.c                       :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 17:40:12 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/04 17:40:14 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/07/04 16:42:02 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:33:48 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"mlx_int.h"
+#include "fdf.h"
 
-int	mlx_int_set_win_event_mask(t_xvar *xvar)
+void free_maps(t_map *map)
 {
-  t_win_list	*win;
-  int		mask;
-  int		i;
-  XSetWindowAttributes	xwa;
-
-  win = xvar->win_list;
-  while (win)
+    if (!map || !map->map)
+        return ;
+    while (map->rows > 0)
     {
-      xwa.event_mask = 0;
-      i = MLX_MAX_EVENT;
-      while (i--)
-	xwa.event_mask |= win->hooks[i].mask;
-      XChangeWindowAttributes(xvar->display, win->window, CWEventMask, &xwa);
-      win = win->next;
+        free(map->map[--map->rows]);
+        map->map[map->rows] = NULL;
     }
+    free(map->map);
+    map->map = NULL;
 }

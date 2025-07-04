@@ -1,18 +1,16 @@
-/*
-** mlx_xpm.c for minilibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Fri Dec  8 11:07:24 2000 Charlie Root
-** Last update Thu Oct  4 16:00:22 2001 Charlie Root
-*/
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_lib_xpm.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:40:39 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:40:47 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include	"mlx_int.h"
-
-
-
 
 void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
 				     int (*xpm_func)(),void *param)
@@ -25,7 +23,7 @@ void		*mlx_int_xpm_f_image(t_xvar *xvar,int *width,int *height,
   xpm_att.visual = xvar->visual;
   xpm_att.colormap = xvar->cmap;
   xpm_att.depth = xvar->depth;
-  xpm_att.bitmap_format = ZPixmap;
+  xpm_att.bitmap_format = ZPixmap
   xpm_att.valuemask = XpmDepth|XpmBitmapFormat|XpmVisual|XpmColormap;
   if (xpm_func(xvar->display,param,&img1,&img2,&xpm_att))
     return ((void *)0);

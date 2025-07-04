@@ -1,13 +1,14 @@
-/*
-** mlx_new_window.c for MiniLibX in 
-** 
-** Made by Charlie Root
-** Login   <ol@epitech.net>
-** 
-** Started on  Mon Jul 31 17:29:02 2000 Charlie Root
-** Last update Thu Oct  4 15:44:43 2001 Charlie Root
-*/
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_new_window.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/04 17:41:58 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/04 17:42:03 by dlesieur         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 /*
 ** We do not use White/BlackPixel macro, TrueColor Visual make sure
