@@ -6,12 +6,17 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 17:49:00 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/04 17:49:01 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/04 18:07:01 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"mlx_int.h"
 
+/**
+  @param xvar the pointer to the server
+  @param win  the pointer to the datas of window
+  @return 1 || 0
+ */
 int	mlx_destroy_window(t_xvar *xvar,t_win_list *win)
 {
   t_win_list	*w;
