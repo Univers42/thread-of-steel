@@ -1,0 +1,25 @@
+# Build Tool Generated .gitignore
+# Generated on Fri  4 Jul 15:32:36 CEST 2025
+
+node_modules
+dist
+build
+.env
+.DS_Store
+*.log
+*.tmp
+.cache
+coverage
+.nyc_output
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
