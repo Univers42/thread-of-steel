@@ -11,6 +11,6 @@
 /* ************************************************************************** */
 
 #ifndef GEOMETRY_H
-# define "geometry.h"
+# define GEOMETRY_H
 
 #endif

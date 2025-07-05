@@ -10,127 +10,124 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "fdf.h"
+#include "fdf.h"
+#include <string.h>
 
+//forward prototypes
+void			event_hooks(t_addr mlx_ptr, t_addr win_ptr);
+static int		start_sim(void);
+void			print_controls(void);
 
-/**
- * if we open the file just once,  we keep the var in a local scope
- * otherwise in a datastructuer
- */
-void create_map(t_map *map, s_file file)
+// Global variables for MLX
+static t_addr g_mlx_ptr = NULL;
+static t_addr g_win_ptr = NULL;
+
+int main(int argc, char **argv)
 {
-	map->map = (t_map *)malloc(sizeof(t_map *));
-	if (!map->map)
-	{
-		ft_putstr_fd("Error allocating memory for map.\n", 2);
-		return (NULL);
-	}
-	map->line = get_next_line(file.fd) > 0;
-	while (map->line)
-	{
-		map->line = get_next_line(file.fd);
-		if (!map->line)
-		{
-			ft_putstr_fd("Error reading line.\n", 2);
-			free(map->map);
-			close(file.fd);
-			return ;
-		}
-		*map->map++ = map->line;
-		free(map->line);
-	}
-	if (ret < 0)
-		ft_putstr_fd("Error reading file.\n", 2);
-	close(file.fd);	
-}
-
-static inline bool valid_input()
-{
-	if (!map | !file | file->fd < 0)
+	if (!valid_input(argc, argv))
 	{
 		ft_putstr_fd("Invalid input parameters.\n", 2);
-		return (false);
-	}
-
-}
-
-static int initialization(argc, argv)
-{
-	int	fd;
-
-	if (argc != 3)
-		return (ft_putstr_fd("Usage: ./fdf <map_file> <window_size>\n", 2, 1));
-	fd = open(argv[1], O_RDONLY);
-	if (fd < 0)
-	{
-		ft_putstr_fd("Error opening file.\n", 2);
 		return (1);
 	}
-	parse_map(argv1, fd);
+	if (preload(argc, argv))
+	{
+		ft_putstr_fd("Initialization failed.\n", 2);
+		return (1);
+	}
+	if (!start_sim())
+	{
+		ft_putstr_fd("Simulation failed.\n", 2);
+		return (1);
+	}
+	return (0);
 }
 
-static int shutdown()
+int valid_input(int argc, char **argv)
 {
-	close(fd);
-	// free allocated memory
-	ft_putstr_fd("FDF closed successfully.\n", 1);
-	mlx_destroy_display(xvar);
-	
+	return (argc == 2 && argv[1] != NULL);
+}
+
+int preload(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+	return (0);
+}
+
+int key_event_handler(int keycode, t_addr param)
+{
+	(void)param;
+	if (keycode == KEY_ESC || keycode == KEY_Q)
+		return (shutdown(NULL));
+	return (0);
+}
+
+int shutdown(t_addr param)
+{
+	(void)param;
+	if (g_win_ptr && g_mlx_ptr)
+		mlx_destroy_window(g_mlx_ptr, g_win_ptr);
+	if (g_mlx_ptr)
+		mlx_destroy_display(g_mlx_ptr);
+	exit(0);
+	return (0);
+}
+
+static int start_sim(void)
+{
+	g_mlx_ptr = mlx_init();
+	if (!g_mlx_ptr)
+		return (0);
+	g_win_ptr = mlx_new_window(g_mlx_ptr, WIDTH_WIN, HEIGHT_WIN, "FDF");
+	if (!g_win_ptr)
+	{
+		ft_putstr_fd("Error creating window.\n", 2);
+		mlx_destroy_display(g_mlx_ptr);
+		return (0);
+	}
+	event_hooks(g_mlx_ptr, g_win_ptr);
+	mlx_do_key_autorepeatoff(g_mlx_ptr);
+	print_controls();
+	mlx_loop(g_mlx_ptr);
 	return (1);
 }
 
-static int start_sim()
-{
-	data.mlx = mlx_init();
-	if (!data.mlx)
-		return (1);
-	data.map = parse_map(argv[1]);
-	if (!data.map)
-	{
-		mlx_destroy_display(data.mlx);
-		free(data.mlx);
-		return(1);
-	}
-}
 
+/**
+@note as I use directly an array in the stack this is not a lvalue
+ * so I can use it as a pointer to the first element of the array
+ * and then iterate through the array using pointer arithmetic.
+ * This is a safe way to print the controls without using dynamic memory allocation.
+ * @note this function is used to print the controls of the FDF program.
+ * It is called at the start of the program to inform the user about the controls.
+ maybe to maximize the modularity I could create a wrapper function
+ * that takes a pointer to the first element of the array and prints it.
+
+*/
 void	print_controls(void)
 {
-	const char *messages[8]=
+	t_addr	ptr;
+	const char *messages[]=
 	{
-		{"=== FDF CONTROLS ==="},
-		{"WASD/Arrow keys: Move"},
-		{"Mouse drag: Rotate"},
-		{"Q/E: Rotate Z-axis"},
-		{"+/-: Zoom"},
-		{"Mouse wheel"},
-		{"0: Show embedded colors (default white)"},
-		{"1-9: color themes"},
-		{"Alt+1-9: shape transforms"},
-		{"Tab: Cycle themes"},
-		{"Alt + tab: Cycle shapes"},
-		{"Space: Change colors"},
-		{"ESC: Exit"}
+		"=== FDF CONTROLS ===",
+		"WASD/Arrow keys: Move",
+		"Mouse drag: Rotate",
+		"Q/E: Rotate Z-axis",
+		"+/-: Zoom",
+		"Mouse wheel",
+		"0: Show embedded colors (default white)",
+		"1-9: color themes",
+		"Alt+1-9: shape transforms",
+		"Tab: Cycle themes",
+		"Alt + tab: Cycle shapes",
+		"Space: Change colors",
+		"ESC: Exit",
+		NULL
+	};
+	ptr = (t_addr)messages;
+	while (*(const char **)ptr)
+	{
+		puts(*(const char **)(ptr));
+		ptr = (t_addr)((const char **)ptr + 1);
 	}
-	while (*messages)
-		ft_putendl(messages++, STDOUT_FILENO);
-}
-
-int main(int argc, char **arv)
-{
-	t_string str;
-	int		ret;
-	t_data data;
-	t_camera *camera;
-	t_controls	*controls;
-	
-	if (!valid_input(argc, argv))
-		return (ft_putstr_fd("Invalid input parameters.\n", 2, 1));
-	if (preload(argc, argv))
-		return (ft_putstr_fd("Initialization failed.\n", 2, 1));
-	if (!sim())
-		return (ft_putrstr("Initialization failed.\n", 2, 1));
-	mlx_do_key_repeatoff(data.mlx);
-	print_controls();
-	mlx_loop(data.mlx);
-	return (0);
 }

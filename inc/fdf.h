@@ -12,17 +12,22 @@
 
 #ifndef FDF_H
 # define FDF_H
-//# include "libft.h"
-//# include "mlx.h"
+
+# include "libft.h"
+# include "mlx.h"
 # include "achi.h"
 # include "fsm.h"
-# include "fdf.h"
-# include "private.h"
+# include "geometry.h"
+# include "internal.h"
+# include "config.h"
 
 # define	BUFFER_PARSER	1024
 # define	NEWLINE			'\n'
 # define	DEFAULT_WHITE	0xFFFFFF
 # define	DECIMAL			10
+# define	WIDTH_WIN		1200
+# define	HEIGHT_WIN		800
+# define	DestroyNotify	17
 # ifndef RADIX_DEBUG
 #  define RADIX_DEBUG		1
 # endif
@@ -86,12 +91,50 @@ int		extract_hex(t_addr *ptr, t_addr result);
 void	advance_ptr(t_addr *ptr, char delimiter);
 void	parse_z(t_map *map, t_addr ptr, t_addr coords);
 bool	is_negative(t_addr *ptr);
-int		ft_isspace(char c);
-int		ft_isdigit(char c);
-int		ft_atoi_base(t_addr str, int radix);
 void	get_dimensions(t_map *map, char *filename);
 int		parse_line(t_string line, t_map *map, int y);
 void	parse_buffer(t_map *map);
 t_map	*parse_map(char *filename);
+
+// Missing type definitions
+typedef struct s_data
+{
+	t_addr	mlx_ptr;
+	t_addr	win_ptr;
+	t_addr	img_ptr;
+	t_string	addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+	t_map	*map;
+}			t_data;
+
+typedef struct s_camera
+{
+	double	zoom;
+	double	angle_x;
+	double	angle_y;
+	double	angle_z;
+	int		offset_x;
+	int		offset_y;
+	int		projection;
+}			t_camera;
+
+typedef struct s_controls
+{
+	int		theme;
+	int		shape;
+	int		colors_enabled;
+}			t_controls;
+
+// Function prototypes
+int		valid_input(int argc, char **argv);
+int		preload(int argc, char **argv);
+int		sim(void);
+int		key_event_handler(int keycode, t_addr param);
+int		mouse_event_handler(int button, int x, int y, t_addr param);
+int		loop_event_handler(t_addr param);
+int		shutdown(t_addr param);
+int		close_handler(void);
 
 #endif

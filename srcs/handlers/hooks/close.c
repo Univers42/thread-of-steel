@@ -10,26 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "fdf.h"
 
-static int red_cross()
-{
+//static int red_cross(void)
+//{
+//	return (1);
+//}
+//
+//static int esc(void)
+//{
+//	return (1);
+//}
+//
+//static int q_key(void)
+//{
+//	return (1);
+//}
 
-}
-
-static int esc()
-{
-    
-}
-
-static int q_key()
-{
-        
-}
-
-int close_handler()
-{
-    // if the red cross is hit
-    // if the esc is hit
-    // if q is hit
-    // then quit but before free memory allocation
-}
+//int close_handler(void)
+//{
+//	// Clean up memory allocation
+//	// Exit program gracefully
+//	exit(0);
+//	return (0);
+//}

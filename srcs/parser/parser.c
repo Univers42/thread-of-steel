@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../inc/fdf.h"
+#include <string.h>
 
 void parse_z(t_map *map, t_addr ptr, t_addr coords)
 {

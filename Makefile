@@ -10,24 +10,12 @@
 #                                                                              #
 # **************************************************************************** #
 
-##
-## @note : for now I'm usign recursive assignment, but I need to use ':='
-## 
-##
-
-# DEFINE MACROS
-define cmd_lib 
-	@echo "$(YELLOW)[WARNING]$(NC) $(1) => $(2)"
-	$(MAKE) -C $(1) $(2)
-endef
-
 # GEN_NAME
 NAME=fdf.a
 CPROG=fdf
 
 # COMPILER AND FLAGS
 CC = cc
-CFLAGS= -Wall -Wextra -Werror -I./inc
 DEBUG_FLAGS = -g -fsanitize=address -fsanitize=undefined
 RELEASE_FLAGS = -O3 -DNDEBUG
 
@@ -36,7 +24,7 @@ AR = ar rcs
 RM = rm -rf
 
 # DIRECTORY ARCHITECTURE
-D_LIB = libs
+D_LIBS = libs
 D_SRCS = srcs
 D_CORE = $(D_SRCS)/core
 D_HANDLERS = $(D_SRCS)/handlers
@@ -44,71 +32,62 @@ D_PARSER = $(D_SRCS)/parser
 D_RENDU = $(D_SRCS)/rendu
 D_LIBFT = $(D_LIBS)/libft
 D_MINILIBX = $(D_LIBS)/minilibx-linux
+CFLAGS = -Wall -Wextra -Werror -I./inc -I./$(D_LIBFT) -I./$(D_MINILIBX)
 
-# FILES FOR EACH DIRECTORIES
-SRC_PARSER =	super_trim.c		\
-				parser_helper.c		\
-				main_parser.c
+# SOURCE FILES
+SRC_CORE = $(D_CORE)/main.c
+SRC_HANDLERS = $(D_HANDLERS)/hooks/close.c
+SRC_PARSER = $(D_PARSER)/super_trim.c $(D_PARSER)/parser.c
+
+SRCS = $(SRC_CORE) $(SRC_HANDLERS) $(SRC_PARSER)
+OBJECTS = $(SRCS:.c=.o)
 
 # Colors for output
-GREEN =	\033[0;32m
+GREEN = \033[0;32m
 RED = \033[0;31m
 BLUE = \033[0;34m
 YELLOW = \033[1;33m
-NC = \033[0m # No Color
+NC = \033[0m
 
 # Default target
-all :  $(NAME)
+all: $(NAME)
 
 # COMPILE OBJECTS FILES
-%.o :  %.c
-	@echo "$(YELLOW)Linking $(NAME) $<$(NC)"
-	@$(CC) $(CFLAGS) -c %< -o $@
+%.o: %.c
+	@echo "$(YELLOW)Compiling $<$(NC)"
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # LINK EXECUTABLES
 $(NAME): $(OBJECTS)
-	$(AR) $(OBJECTS) $(NAME)
+	@echo "$(GREEN)Creating $(NAME)$(NC)"
+	@$(AR) $(NAME) $(OBJECTS)
 
-build:
-	@echo "$(YELLOW) Building the libs: $(D_LIBFT) $(MINILIBX)"
-	$(call cmd_lib, $(D_LIBFT), all)
-	$(call cmd_lib, $(MINILIBX), all)
-	
-# DEBUG BUILD
-debug: $(OBJECTS)
+$(CPROG): $(OBJECTS)
+	@echo "$(GREEN)Creating $(CPROG)$(NC)"
+	@$(CC) $(CFLAGS) $(OBJECTS) -o $(CPROG)
 
-# CLEAN  OBJECT FILES
+# CLEAN OBJECT FILES
 clean:
-	$(RM) $(OBJECTS)
-	$(call cmd_lib, $(D_LIBFT), clean)
-	$(call cmd_lib, $(D_LIBFT), clean)
+	@echo "$(RED)Cleaning object files$(NC)"
+	@$(RM) $(OBJECTS)
 
 # CLEAN EVERYTHING
 fclean: clean
-	$(RM) $(NAME) $(CPROG)
-	$(call cmd_lib, $(D_LIBFT), fclean)
-	$(call cmd_lib, $(D_LIBFT), fclean)
+	@echo "$(RED)Cleaning $(NAME) and $(CPROG)$(NC)"
+	@$(RM) $(NAME) $(CPROG)
 
-# MEMORY LEAK TEST
-# PERFORMANCE TEST
-# INSTALL DEPENDENCIES
+# REBUILD
+re: fclean all
 
 # HELP
 help:
 	@echo "$(GREEN)FDF Parser Makefile$(NC)"
 	@echo "$(BLUE)Available targets:$(NC)"
 	@echo "  $(YELLOW)all$(NC)        - Build the program"
-	@echo "  $(YELLOW)debug$(NC)      - Build with debug flags"
-	@echo "  $(YELLOW)release$(NC)    - Build optimized version"
 	@echo "  $(YELLOW)clean$(NC)      - Remove object files"
 	@echo "  $(YELLOW)fclean$(NC)     - Remove object files and executable"
 	@echo "  $(YELLOW)re$(NC)         - Rebuild everything"
-	@echo "  $(YELLOW)valgrind$(NC)   - Run memory leak tests"
-	@echo "  $(YELLOW)perf$(NC)       - Run performance tests"
 	@echo "  $(YELLOW)help$(NC)       - Show this help"
-# PHONY TARGETS
 
-.PHONY: all debug release clean fclean re help install valgrind
-
-# DEFAULT GOAL
+.PHONY: all clean fclean re help
 .DEFAULT_GOAL := all
