@@ -6,9 +6,14 @@
 #    By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/04 15:37:04 by dlesieur          #+#    #+#              #
-#    Updated: 2025/07/05 21:34:50 by dlesieur         ###   ########.fr        #
+#    Updated: 2025/07/06 00:37:22 by dlesieur         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+define cmd_build
+	@echo "$(YELLOW)Building $(1)..."
+	$(MAKE) -C $(1) $(2)
+endef
 
 # GEN_NAME
 NAME=fdf.a
@@ -49,22 +54,34 @@ BLUE = \033[0;34m
 YELLOW = \033[1;33m
 NC = \033[0m
 
+LIBS := $(NAME) $(D_LIBFT)/libft.a $(D_MINILIBX)/libmlx.a
+
 # Default target
 all: $(NAME)
 
+#COMPILE PROGRAM
+$(CPROG): $(NAME)
+	@echo "$(YELLO) compiling $@$(NC)"
+	$(CC) $(CFLAGS) $(D_CORE)/main.c -L/fdf -o $@
+	
 # COMPILE OBJECTS FILES
 %.o: %.c
 	@echo "$(YELLOW)Compiling $<$(NC)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 # LINK EXECUTABLES
-$(NAME): $(OBJECTS)
+$(NAME): build $(OBJECTS)
 	@echo "$(GREEN)Creating $(NAME)$(NC)"
 	@$(AR) $(NAME) $(OBJECTS)
 
-$(CPROG): $(OBJECTS)
+build:
+	$(call cmd_build, $(D_LIBFT), all)
+	$(call cmd_build, $(D_MINILIBX), all)
+
+$(CPROG): $(NAME)
 	@echo "$(GREEN)Creating $(CPROG)$(NC)"
-	@$(CC) $(CFLAGS) $(OBJECTS) -o $(CPROG)
+	@$(CC) $(CFLAGS) $(LIBS) -o $(CPROG)
+
 
 # CLEAN OBJECT FILES
 clean:
@@ -75,6 +92,8 @@ clean:
 fclean: clean
 	@echo "$(RED)Cleaning $(NAME) and $(CPROG)$(NC)"
 	@$(RM) $(NAME) $(CPROG)
+	@$(call cmd_build, $(D_MINILIBX), clean)
+	@$(call cmd_build, $(D_LIBFT), fclean)
 
 # REBUILD
 re: fclean all
