@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 18:54:55 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/05 00:48:51 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/05 15:56:04 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ typedef ssize_t	t_dim;
 typedef char*	t_string;
 typedef int		t_file_info;
 typedef int		t_signature ;
+typedef void*	t_ptr;
+
+# define DEFAULT_WHITE
+
 typedef struct s_rendu
 {
 	t_string	color;
@@ -88,9 +92,86 @@ void	get_dimensions(t_map *map, char *filename)
 	}
 	close(fd);
 }
+
+void	skip_leading_space(t_addr *ptr)
+{
+	while (*ptr == ' ' || *ptr == '\t')
+		ptr++;
+}
+
+void is_negative(t_addr ptr, t_addr negative)
+{
+	if (*ptr == '-')
+	{
+		negative = 1;
+		ptr++;
+	}
+}
+
+void cumul_zval(t_addr z_val, t_addr ptr)
+{
+	if (*ptr >= '0' && *ptr <= '9')
+		z_val = z_val * 10 +  ((*ptr)++ - '0');
+}
+
+void	parse_z(t_map *map, t_addr ptr)
+{
+	int x;
+	int z_val;
+	int negative;
+
+	x = 0;
+	z_val = 0;
+	while (*ptr && x < map->width)
+	{
+		is_negative(ptr, (t_addr)negative);
+		cumul_zval((t_addr)z_val, ptr);
+		if (negative)
+			z_val = -z_val;
+		check_color();
+	
+	}
+}
+
+void update_z(t_addr *min_z, t_addr *max_z, t_addr *z_val)
+{
+	
+}
+
+void skip_number(t_map *map)
+{
+
+}
+
+void convert_color
+void check_color(t_map *map)
+{
+	int color;
+
+	color = DEFAULT_WHITE;
+	if (*ptr == '0' && (*(ptr + 1) == 'x') || *(ptr + 1) == 'x')
+	{
+		color = 
+	}
+}
+
 void	parse_line(t_map *map)
 {
-	int	x;
+	int		x;
+	t_addr	ptr;
+	int		z_val;
+	in	color;
+
+	x = 0;
+	ptr = line;
+	z_val;
+	color;
+
+	skip_leading_space();
+	parse_z(map);
+	
+	
+	
 	
 }
 
