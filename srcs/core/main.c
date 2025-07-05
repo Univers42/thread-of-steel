@@ -102,7 +102,6 @@ static int start_sim(void)
  * It is called at the start of the program to inform the user about the controls.
  maybe to maximize the modularity I could create a wrapper function
  * that takes a pointer to the first element of the array and prints it.
-
 */
 void	print_controls(void)
 {
@@ -130,4 +129,11 @@ void	print_controls(void)
 		puts(*(const char **)(ptr));
 		ptr = (t_addr)((const char **)ptr + 1);
 	}
+}
+
+void event_hooks(t_addr mlx_ptr, t_addr win_ptr)
+{
+	(void)mlx_ptr;
+	(void)win_ptr;
+	// TODO: Add your event hook registrations here
 }

@@ -80,7 +80,7 @@ build:
 
 $(CPROG): $(NAME)
 	@echo "$(GREEN)Creating $(CPROG)$(NC)"
-	@$(CC) $(CFLAGS) $(LIBS) -o $(CPROG)
+	@$(CC) $(CFLAGS) $(LIBS) -lX11 -lXext -lbsd -o $(CPROG)
 
 
 # CLEAN OBJECT FILES

@@ -28,6 +28,8 @@ PRINTF_SRCS = $(shell find stdio/ft_printf_42/src -name "*.c" 2>/dev/null)
 GNL_SRCS = $(wildcard stdio/gnl/*.c)
 ALL_SRCS = $(SRCS) $(PRINTF_SRCS) $(GNL_SRCS)
 
+OBJ_DIR = obj
+
 # Object files with directory structure preserved
 OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(ALL_SRCS))
 
