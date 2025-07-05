@@ -19,6 +19,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stdbool.h>
 
 typedef int		t_coord;
 typedef ssize_t	t_dim;
@@ -40,9 +41,9 @@ typedef void*	t_addr;
 // due to need to skip different string pattern
 typedef enum s_state
 {
-	RADIX = 1 << 0,
-	SPACES = 1 << 1,
-	NUMS = 1 << 2,
+	TRIM_RADIX = 1 << 0,
+	TRIM_SPACES = 1 << 1,
+	TRIM_NUMS = 1 << 2,
 }			t_state;
 
 /**
@@ -70,7 +71,7 @@ typedef struct s_point
  */
 typedef struct s_map
 {
-	char		**points;		// potentially wrong because don't knoow yet if it will be stack or heap allocated
+	t_point		**points;		// Fix: should be t_point** not char**
 	t_string	buffer;			//The buffer to parse
 	t_dim		height;			// The total of lines
 	t_dim		width;			//The total of bytes we encounter in a line
@@ -80,13 +81,17 @@ typedef struct s_map
 }				t_map;
 
 int	should_skip(char c, t_state flags);
-ft_trim(t_addr *ptr, t_state flags);
+void	ft_trim(t_addr *ptr, t_state flags);
+int	extract_sign(t_addr *ptr);
+int	cumul_value(t_addr *ptr, t_addr target);
+int	extract_hex(t_addr *ptr, t_addr result);
+void	advance_ptr(t_addr *ptr, char delimiter);
+void	parse_z(t_map *map, t_addr ptr, t_addr coords);
 bool	is_negative(t_addr *ptr);
 int		ft_isspace(char c);
 int		ft_isdigit(char c);
-int		ft_isdigit(char c);
 int		ft_atoi_base(t_addr str, int radix);
-void	get_dimensions(t_string line, t_map *map, int y);
+void	get_dimensions(t_map *map, char *filename);
 int		parse_line(t_string line, t_map *map, int y);
 void	parse_buffer(t_map *map);
 t_map	*parse_map(char *filename);

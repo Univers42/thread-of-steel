@@ -31,20 +31,14 @@ CFLAGS = -Wall -Wextra -Werror -std=c99
 DEBUG_FLAGS = -g -fsanitize=address -fsanitize=undefined
 RELEASE_FLAGS = -O3 -DNDEBUG
 
-# Directories
-SRC_DIR = src
-OBJ_DIR = obj
-INC_DIR = include
-TEST_DIR = test_maps
-
-# Source files
+# Use current directory for sources and objects
 SRC_FILES = main.c \
 			super_trim.c \
 			parser_helper.c \
 			main_parser.c
 
-SRCS = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
+SRCS = $(SRC_FILES)
+OBJS = $(SRC_FILES:.c=.o)
 
 # Header files
 HEADERS = parser.h
@@ -59,15 +53,10 @@ NC = \033[0m # No Color
 # Default target
 all: $(NAME)
 
-# Create object directory
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
-	@echo "$(BLUE)Created object directory$(NC)"
-
 # Compile object files
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) | $(OBJ_DIR)
+%.o: %.c $(HEADERS)
 	@echo "$(YELLOW)Compiling $<$(NC)"
-	@$(CC) $(CFLAGS) -I$(INC_DIR) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 # Link executable
 $(NAME): $(OBJS)
@@ -87,7 +76,7 @@ release: re
 
 # Clean object files
 clean:
-	@rm -rf $(OBJ_DIR)
+	@rm -f *.o
 	@echo "$(RED)🧹 Object files cleaned$(NC)"
 
 # Clean everything
