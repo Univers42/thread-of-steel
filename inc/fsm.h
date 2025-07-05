@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config.h                                           :+:      :+:    :+:   */
+/*   fsm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 18:40:26 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/05 21:10:57 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/07/05 21:08:47 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/05 21:44:36 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONFIG_H
-# define CONFIG_H
+#ifndef FSM_H
+# define FSM_H
 
-/**
-	this enum will be connected to the implementation as a plugin would do
-	we create a jump table that jump right into the logic of those themes
-	that will have some setters for the colors of the code.
-	We will change them directly through memory.
- */
-typedef enum s_theme
+// FSM -like to create the mini super trim
+// due to need to skip different string pattern
+typedef enum s_state
 {
-	DEFAULT,
-	DARK,
-	PUNK,
-	RETRO,
-	EARTH,
-	SPACE
-}			t_theme;
+	TRIM_RADIX = (1 << 0),
+	TRIM_SPACES = (1 << 1),
+	TRIM_NUMS = (1 << 2),
+}			t_state;
+
 #endif

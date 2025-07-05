@@ -6,68 +6,92 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:40:39 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/04 18:48:12 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:44:10 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
-# include "libft.h"
-# include "mlx.h"
+//# include "libft.h"
+//# include "mlx.h"
+# include "achi.h"
+# include "fsm.h"
+# include "fdf.h"
+# include "private.h"
 
-typedef enum s_theme
+# define	BUFFER_PARSER	1024
+# define	NEWLINE			'\n'
+# define	DEFAULT_WHITE	0xFFFFFF
+# define	DECIMAL			10
+# ifndef RADIX_DEBUG
+#  define RADIX_DEBUG		1
+# endif
+
+// we need the points for the color I guess into the map
+// it can also be great for extracting different value and
+// avoiding that they overflow if they are huger
+// as we express teh point as pixels
+typedef struct s_point
 {
-	DEFAULT,
-	DARK,
-	PUNK,
-	RETRO,
-	EARTH,
-	SPACE
-}			t_theme;
+	t_coord	x;
+	t_coord	y;
+	t_coord	z;
+	int	color;
+}			t_point;
 
 /**
- * 
+this is a parser structure that is just to be used for extracting 
+correctly and cleanly all the value we need to build our project
  */
-typedef enum s_hook_key
-{
-	key_up = 126,
-	
-}			t_hook_key;
-// legacy mask for compatibility between x11 and my naming convention
-
 typedef struct s_map
 {
-	char	**map;
-	char	*line;
-	int 	rows;
-	int 	cols;
-	int 	capacity;
-}t_map;
+	t_point		**points;		// Fix: should be t_point** not char**
+	t_string	buffer;			//The buffer to parse
+	t_dim		height;			// The total of lines
+	t_dim		width;			//The total of bytes we encounter in a line
+	t_dim		bytes;			// The total bytes of the whole file
+	t_dim		min_z;			// Don't kno yet
+	t_dim		max_z;			// Don't know yet
+}				t_map;
 
-typedef struct s_file
-{
-	int		fd;
-	char 	*filename;	
-}				t_file;
-
-typedef struct s_anim
-{
-	
-}
-
+/**
+	When we will open our windows, this structure will be the core data
+	of window's  configuration. for instance the dimensions are needed
+	to be change we cannchange them.
+ */
 typedef struct win
 {
-	int     width;
-	int     height;
-	char    *title;
-}   t_win;
+	t_dim		width;		// dimensions horizontal byte/byte
+	t_dim		height;		// dimensions vertcial byte/byte
+	t_string	title;		// title of the structure
+}				t_win;
 
-// PARSER
 
-// MOTION
 
-// UTILS
+/**
+data structure that handle  the colors with 
+ */
+typedef struct s_rendu
+{
+	t_string	color;
+	t_radix     hex;		//mayybe int or char*,, I  don¡'t know yet
+}				t_rendu;
 
-//OPTIMIZATION
+
+int		should_skip(char c, t_state flags);
+void	ft_trim(t_addr *ptr, t_state flags);
+int		extract_sign(t_addr *ptr);
+int		cumul_value(t_addr *ptr, t_addr target);
+int		extract_hex(t_addr *ptr, t_addr result);
+void	advance_ptr(t_addr *ptr, char delimiter);
+void	parse_z(t_map *map, t_addr ptr, t_addr coords);
+bool	is_negative(t_addr *ptr);
+int		ft_isspace(char c);
+int		ft_isdigit(char c);
+int		ft_atoi_base(t_addr str, int radix);
+void	get_dimensions(t_map *map, char *filename);
+int		parse_line(t_string line, t_map *map, int y);
+void	parse_buffer(t_map *map);
+t_map	*parse_map(char *filename);
 
 #endif

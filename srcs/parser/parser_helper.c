@@ -6,11 +6,11 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:27:52 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/05 19:10:42 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:42:59 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../../inc/fdf.h"
 
 void parse_z(t_map *map, t_addr ptr, t_addr coords)
 {
@@ -20,10 +20,10 @@ void parse_z(t_map *map, t_addr ptr, t_addr coords)
 	int color;
 	
 	*x = 0;
-	while (*(char *)ptr && *x < map->width)
+	while (*(char *)ptr && *(char *)ptr != '\n' && *(char *)ptr != '\0')
 	{
 		ft_trim(&ptr, TRIM_SPACES);
-		if (!*(char *)ptr)
+		if (!*(char *)ptr || *(char *)ptr == '\n')
 			break;
 		
 		// Extract z value directly into memory
@@ -58,13 +58,15 @@ void parse_z(t_map *map, t_addr ptr, t_addr coords)
 	}
 }
 
+
 void get_dimensions(t_map *map, char *filename)
 {
 	t_file_info fd;
-	char buf[BUFFER_PARSER];  // Fix: use BUFFER_PARSER instead of BUFFER_SIZE
+	char buf[BUFFER_PARSER];
 	t_addr buf_ptr;
 	int bytes_read;
 	int current_width = 0;
+	int in_number = 0;  // Flag to track if we're inside a number/data point
 	
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
@@ -82,19 +84,34 @@ void get_dimensions(t_map *map, char *filename)
 		
 		while (buf_ptr < (t_addr)(buf + bytes_read))
 		{
-			if (*(char *)buf_ptr == '\n')
+			char current_char = *(char *)buf_ptr;
+			
+			if (current_char == '\n')
 			{
 				if (current_width > map->width)
 					map->width = current_width;
 				map->height++;
 				current_width = 0;
+				in_number = 0;
 			}
-			else if (*(char *)buf_ptr != ' ' && *(char *)buf_ptr != '\t')
+			else if (current_char == ' ' || current_char == '\t')
+			{
+				in_number = 0;  // We're no longer in a number
+			}
+			else if (!in_number)
+			{
+				// We're starting a new data point
 				current_width++;
+				in_number = 1;
+			}
+			// If in_number is 1 and we're not at whitespace or newline,
+			// we're still in the same data point, so don't increment
+			
 			buf_ptr = (char *)buf_ptr + 1;
 		}
 	}
 	
+	// Handle case where file doesn't end with newline
 	if (current_width > 0)
 	{
 		if (current_width > map->width)
@@ -104,6 +121,7 @@ void get_dimensions(t_map *map, char *filename)
 	
 	close(fd);
 }
+
 
 void parse_buffer(t_map *map)
 {

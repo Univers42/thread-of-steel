@@ -6,11 +6,11 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 19:15:46 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/05 19:15:58 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:42:47 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "../../inc/fdf.h"
 
 int main(int argc, char **argv)
 {
@@ -41,4 +41,3 @@ int main(int argc, char **argv)
 	
 	return (0);
 }
-

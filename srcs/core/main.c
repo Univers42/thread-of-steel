@@ -6,7 +6,7 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/04 15:40:13 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/04 18:27:13 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/05 22:04:02 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,47 @@ static int shutdown()
 
 static int start_sim()
 {
-	
+	data.mlx = mlx_init();
+	if (!data.mlx)
+		return (1);
+	data.map = parse_map(argv[1]);
+	if (!data.map)
+	{
+		mlx_destroy_display(data.mlx);
+		free(data.mlx);
+		return(1);
+	}
+}
+
+void	print_controls(void)
+{
+	const char *messages[8]=
+	{
+		{"=== FDF CONTROLS ==="},
+		{"WASD/Arrow keys: Move"},
+		{"Mouse drag: Rotate"},
+		{"Q/E: Rotate Z-axis"},
+		{"+/-: Zoom"},
+		{"Mouse wheel"},
+		{"0: Show embedded colors (default white)"},
+		{"1-9: color themes"},
+		{"Alt+1-9: shape transforms"},
+		{"Tab: Cycle themes"},
+		{"Alt + tab: Cycle shapes"},
+		{"Space: Change colors"},
+		{"ESC: Exit"}
+	}
+	while (*messages)
+		ft_putendl(messages++, STDOUT_FILENO);
 }
 
 int main(int argc, char **arv)
 {
-	char	*str;
+	t_string str;
 	int		ret;
+	t_data data;
+	t_camera *camera;
+	t_controls	*controls;
 	
 	if (!valid_input(argc, argv))
 		return (ft_putstr_fd("Invalid input parameters.\n", 2, 1));
@@ -95,6 +129,8 @@ int main(int argc, char **arv)
 		return (ft_putstr_fd("Initialization failed.\n", 2, 1));
 	if (!sim())
 		return (ft_putrstr("Initialization failed.\n", 2, 1));
-	shutdown();
+	mlx_do_key_repeatoff(data.mlx);
+	print_controls();
+	mlx_loop(data.mlx);
 	return (0);
 }

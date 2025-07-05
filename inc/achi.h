@@ -1,15 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_parser.c                                      :+:      :+:    :+:   */
+/*   achi.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/04 18:54:55 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/05 19:10:54 by dlesieur         ###   ########.fr       */
+/*   Created: 2025/07/05 20:59:07 by dlesieur          #+#    #+#             */
+/*   Updated: 2025/07/05 21:44:45 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#ifndef ACHI_H
+# define ACHI_H
 
-// This file is now empty - all functions moved to parser_helper.c
+# include <limits.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
+
+typedef int		t_coord;
+typedef ssize_t	t_dim;
+typedef int		t_file_info;
+typedef int		t_radix;
+typedef char*	t_string;
+typedef void*	t_addr;
+
+#endif

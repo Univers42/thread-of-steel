@@ -6,13 +6,11 @@
 /*   By: dlesieur <dlesieur@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 17:47:01 by dlesieur          #+#    #+#             */
-/*   Updated: 2025/07/05 19:09:56 by dlesieur         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:43:03 by dlesieur         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
-
-#include "parser.h"
+#include "../../inc/fdf.h"
 
 int should_skip(char c, t_state flags)
 {
